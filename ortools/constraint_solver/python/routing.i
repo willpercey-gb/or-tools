@@ -129,3 +129,10 @@ struct RoutingSearchStatus {
 // TODO(user): Use ignoreall/unignoreall for this one. A lot of work.
 //swiglint: disable include-h-allglobals
 %include "ortools/constraint_solver/routing.h"
+
+%extend operations_research::RoutingDimension {
+    void AddToCumulVar(int index, int64 value) {
+        self->CumulVar(index)->SetMin(self->CumulVar(index)->Min() + value);
+        self->CumulVar(index)->SetMax(self->CumulVar(index)->Max() + value);
+    }
+}
